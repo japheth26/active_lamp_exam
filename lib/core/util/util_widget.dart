@@ -50,6 +50,52 @@ class FieldLabel extends StatelessWidget {
   }
 }
 
+// Field Label Copy
+//
+//
+class FieldLabelCopy extends StatelessWidget {
+  final String label;
+  final Function function;
+
+  const FieldLabelCopy({
+    Key key,
+    @required this.label,
+    @required this.function,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        FieldLabel(
+          icon: Icon(Icons.short_text),
+          label: label,
+        ),
+        IconButton(icon: Icon(Icons.copy), onPressed: function)
+      ],
+    );
+  }
+}
+
+class Result extends StatelessWidget {
+  final String result;
+
+  const Result({Key key, this.result}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 10, right: 10),
+      width: double.infinity,
+      child: Text(
+        result ?? 'n/a',
+        style: TextStyle(
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+}
+
 // EXPANDABLE FIELD
 //
 //

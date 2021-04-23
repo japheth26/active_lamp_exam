@@ -57,20 +57,9 @@ class BodyContent extends StatelessWidget {
             hint: 'Input your shortened URL',
             textEditingController: null,
           ),
-          if (false)
-            Column(
-              children: [
-                SizedBox(height: 30),
-                FieldLabel(
-                  icon: Icon(Icons.short_text),
-                  label: 'Original URL',
-                ),
-                ExpandableField(
-                  hint: null,
-                  textEditingController: null,
-                ),
-              ],
-            ),
+          SizedBox(height: 30),
+          FieldLabelCopy(label: 'Original URL', function: () {}),
+          Result(result: null),
           SizedBox(height: 30),
           ActionButtons(),
         ],
