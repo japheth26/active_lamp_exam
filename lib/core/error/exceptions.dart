@@ -1,21 +1,15 @@
-class ServerException implements Exception {}
+class ServerException implements Exception {
+  final String message;
 
-// FORBIDDEN
-//
-//
-class ServerException403 implements Exception {}
+  ServerException(this.message);
+}
 
-// NOT_FOUND
-//
-//
-class ServerException404 implements Exception {}
+const String ERROR_UNKNOWN = 'Unknown error';
 
-// INTERNAL_ERROR
-//
-//
-class ServerException500 implements Exception {}
+const String ERROR_403 = 'Error[403]: Forbidden';
 
-// TEMPORARILY_NOT_AVAILABLE
-//
-//
-class ServerException503 implements Exception {}
+const String ERROR_404 = 'Error[404]: Not found';
+
+const String ERROR_500 = 'Error[500]: Server internal error';
+
+const String ERROR_503 = 'Error[503] Server emporarily not available';

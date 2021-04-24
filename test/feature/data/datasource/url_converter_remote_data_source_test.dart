@@ -24,6 +24,44 @@ main() {
 
   ApiAccess _api = ApiAccess();
 
+  void _testShortUrlException(int statusCode, String tUrl) {
+    // arrange
+    //
+    //
+    when(mockHttpClient.post(any,
+            headers: anyNamed('headers'), body: anyNamed('body')))
+        .thenAnswer(
+            (_) async => http.Response('Something went wrong', statusCode));
+
+    // act
+    //
+    //
+    final call = dataSource.getShortUrl;
+
+    // assert
+    //
+    //
+    expect(() => call(tUrl), throwsA(matcher.TypeMatcher<ServerException>()));
+  }
+
+  void _testOriginalUrlException(int statusCode, String tUrl) {
+    // arrange
+    //
+    //
+    when(mockHttpClient.get(any, headers: anyNamed('headers'))).thenAnswer(
+        (_) async => http.Response('something went wrong.', statusCode));
+
+    // act
+    //
+    //
+    final call = dataSource.getOriginalUrl;
+
+    // assert
+    //
+    //
+    expect(() => call(tUrl), throwsA(matcher.TypeMatcher<ServerException>()));
+  }
+
   group('getShortUrl', () {
     final String tUrl = 'https://www.youtube.com/watch?v=NO2typgFCIE';
     final Map data = {'long_url': tUrl};
@@ -105,84 +143,20 @@ main() {
       expect(result.toJson(), equals(tUrlModel.toJson()));
     });
 
-    test('should throw Server Exception 403 when response code is 403', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.post(any,
-              headers: anyNamed('headers'), body: anyNamed('body')))
-          .thenAnswer((_) async => http.Response('Something went wrong', 403));
-
-      // act
-      //
-      //
-      final call = dataSource.getShortUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException403>()));
+    test('should throw Server Exception when response code is 403', () {
+      _testShortUrlException(403, tUrl);
     });
 
-    test('should throw Server Exception 404 when response code is 404', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.post(any,
-              headers: anyNamed('headers'), body: anyNamed('body')))
-          .thenAnswer((_) async => http.Response('Something went wrong', 404));
-
-      // act
-      //
-      //
-      final call = dataSource.getShortUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException404>()));
+    test('should throw Server Exception when response code is 404', () {
+      _testShortUrlException(404, tUrl);
     });
 
-    test('should throw Server Exception 500 when response code is 500', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.post(any,
-              headers: anyNamed('headers'), body: anyNamed('body')))
-          .thenAnswer((_) async => http.Response('Something went wrong', 500));
-
-      // act
-      //
-      //
-      final call = dataSource.getShortUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException500>()));
+    test('should throw Server Exception when response code is 500', () {
+      _testShortUrlException(500, tUrl);
     });
 
     test('should throw Server Exception 503 when response code is 503', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.post(any,
-              headers: anyNamed('headers'), body: anyNamed('body')))
-          .thenAnswer((_) async => http.Response('Something went wrong', 503));
-
-      // act
-      //
-      //
-      final call = dataSource.getShortUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException503>()));
+      _testShortUrlException(503, tUrl);
     });
   });
 
@@ -238,79 +212,19 @@ main() {
     });
 
     test('should throw Server Exception 403 when response code is 403', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response('something went wrong.', 403));
-
-      // act
-      //
-      //
-      final call = dataSource.getOriginalUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException403>()));
+      _testOriginalUrlException(403, tUrl);
     });
 
     test('should throw Server Exception 404 when response code is 404', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response('something went wrong.', 404));
-
-      // act
-      //
-      //
-      final call = dataSource.getOriginalUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException404>()));
+      _testOriginalUrlException(404, tUrl);
     });
 
     test('should throw Server Exception 500 when response code is 500', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response('something went wrong.', 500));
-
-      // act
-      //
-      //
-      final call = dataSource.getOriginalUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException500>()));
+      _testOriginalUrlException(500, tUrl);
     });
 
     test('should throw Server Exception 503 when response code is 503', () {
-      // arrange
-      //
-      //
-      when(mockHttpClient.get(any, headers: anyNamed('headers')))
-          .thenAnswer((_) async => http.Response('something went wrong.', 503));
-
-      // act
-      //
-      //
-      final call = dataSource.getOriginalUrl;
-
-      // assert
-      //
-      //
-      expect(
-          () => call(tUrl), throwsA(matcher.TypeMatcher<ServerException503>()));
+      _testOriginalUrlException(503, tUrl);
     });
   });
 }

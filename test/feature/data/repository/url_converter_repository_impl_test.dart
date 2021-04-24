@@ -81,7 +81,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getShortUrl(any))
-            .thenThrow(ServerException());
+            .thenThrow(ServerException(ERROR_UNKNOWN));
 
         // act
         //
@@ -92,7 +92,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getShortUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE)));
+        expect(result, equals(Left(ERROR_UNKNOWN)));
       });
 
       test(
@@ -102,7 +102,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getShortUrl(any))
-            .thenThrow(ServerException403());
+            .thenThrow(ServerException(ERROR_403));
 
         // act
         //
@@ -113,7 +113,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getShortUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_403)));
+        expect(result, equals(Left(ERROR_403)));
       });
 
       test(
@@ -123,7 +123,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getShortUrl(any))
-            .thenThrow(ServerException404());
+            .thenThrow(ServerException(ERROR_404));
 
         // act
         //
@@ -134,7 +134,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getShortUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_404)));
+        expect(result, equals(Left(ERROR_404)));
       });
 
       test(
@@ -144,7 +144,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getShortUrl(any))
-            .thenThrow(ServerException500());
+            .thenThrow(ServerException(ERROR_500));
 
         // act
         //
@@ -155,7 +155,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getShortUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_500)));
+        expect(result, equals(Left(ERROR_500)));
       });
 
       test(
@@ -165,7 +165,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getShortUrl(any))
-            .thenThrow(ServerException503());
+            .thenThrow(ServerException(ERROR_503));
 
         // act
         //
@@ -176,7 +176,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getShortUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_503)));
+        expect(result, equals(Left(ERROR_503)));
       });
     });
 
@@ -233,7 +233,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getOriginalUrl(any))
-            .thenThrow(ServerException());
+            .thenThrow(ServerException(ERROR_UNKNOWN));
 
         // act
         //
@@ -244,7 +244,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getOriginalUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE)));
+        expect(result, equals(Left(ERROR_UNKNOWN)));
       });
 
       test(
@@ -254,7 +254,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getOriginalUrl(any))
-            .thenThrow(ServerException403());
+            .thenThrow(ServerException(ERROR_403));
 
         // act
         //
@@ -265,7 +265,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getOriginalUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_403)));
+        expect(result, equals(Left(ERROR_403)));
       });
 
       test(
@@ -275,7 +275,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getOriginalUrl(any))
-            .thenThrow(ServerException404());
+            .thenThrow(ServerException(ERROR_404));
 
         // act
         //
@@ -286,7 +286,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getOriginalUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_404)));
+        expect(result, equals(Left(ERROR_404)));
       });
 
       test(
@@ -296,7 +296,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getOriginalUrl(any))
-            .thenThrow(ServerException500());
+            .thenThrow(ServerException(ERROR_500));
 
         // act
         //
@@ -307,7 +307,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getOriginalUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_500)));
+        expect(result, equals(Left(ERROR_500)));
       });
 
       test(
@@ -317,7 +317,7 @@ void main() {
         //
         //
         when(mockRemoteDataSource.getOriginalUrl(any))
-            .thenThrow(ServerException503());
+            .thenThrow(ServerException(ERROR_503));
 
         // act
         //
@@ -328,7 +328,7 @@ void main() {
         //
         //
         verify(mockRemoteDataSource.getOriginalUrl(tUrl));
-        expect(result, equals(Left(SERVER_FAILURE_503)));
+        expect(result, equals(Left(ERROR_503)));
       });
     });
 

@@ -32,7 +32,8 @@ class UrlConvertRemoteDataSourceImpl implements UrlConvertRemoteDataSource {
       return UrlModel(
           isSuccess: true, message: 'Success', value: map['long_url']);
     } else {
-      return _checkException(response);
+      _checkException(response);
+      return null;
     }
   }
 
@@ -52,29 +53,30 @@ class UrlConvertRemoteDataSourceImpl implements UrlConvertRemoteDataSource {
       Map<String, dynamic> map = jsonDecode(response.body);
       return UrlModel(isSuccess: true, message: 'Success', value: map['link']);
     } else {
-      return _checkException(response);
+      _checkException(response);
+      return null;
     }
   }
 
   // VALIDATE RESPONSE
   //
   //
-  Null _checkException(http.Response response) {
+  void _checkException(http.Response response) {
     switch (response.statusCode) {
       case 403:
-        throw ServerException403();
+        throw ServerException(ERROR_403);
         break;
       case 404:
-        throw ServerException404();
+        throw ServerException(ERROR_404);
         break;
       case 500:
-        throw ServerException500();
+        throw ServerException(ERROR_500);
         break;
       case 503:
-        throw ServerException503();
+        throw ServerException(ERROR_503);
         break;
       default:
-        throw ServerException();
+        throw ServerException(ERROR_UNKNOWN);
     }
   }
 }
