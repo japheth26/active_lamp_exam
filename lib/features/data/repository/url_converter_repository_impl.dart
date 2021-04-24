@@ -8,7 +8,12 @@ import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 
 const String NO_INTERNET_CONNECTION = 'No internet connection.';
-const String SERVER_FAILURE = 'Server Failure.';
+const String SERVER_FAILURE = 'Unknown Server Error';
+const String SERVER_FAILURE_403 = 'Error[403] Forbidden';
+const String SERVER_FAILURE_404 = 'Error[404] Not found';
+const String SERVER_FAILURE_500 = 'Error[500] Server internal error';
+const String SERVER_FAILURE_503 =
+    'Error[503] Server temporarily not available.';
 
 class UrlConverterRepositoryImpl implements UrlConverterRepository {
   final UrlConvertRemoteDataSource remoteDataSource;
@@ -27,6 +32,14 @@ class UrlConverterRepositoryImpl implements UrlConverterRepository {
         return Right(result);
       } on ServerException {
         return Left(SERVER_FAILURE);
+      } on ServerException403 {
+        return Left(SERVER_FAILURE_403);
+      } on ServerException404 {
+        return Left(SERVER_FAILURE_404);
+      } on ServerException500 {
+        return Left(SERVER_FAILURE_500);
+      } on ServerException503 {
+        return Left(SERVER_FAILURE_503);
       }
     } else {
       return Left(NO_INTERNET_CONNECTION);
@@ -41,6 +54,14 @@ class UrlConverterRepositoryImpl implements UrlConverterRepository {
         return Right(result);
       } on ServerException {
         return Left(SERVER_FAILURE);
+      } on ServerException403 {
+        return Left(SERVER_FAILURE_403);
+      } on ServerException404 {
+        return Left(SERVER_FAILURE_404);
+      } on ServerException500 {
+        return Left(SERVER_FAILURE_500);
+      } on ServerException503 {
+        return Left(SERVER_FAILURE_503);
       }
     } else {
       return Left(NO_INTERNET_CONNECTION);

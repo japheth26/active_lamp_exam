@@ -75,7 +75,7 @@ void main() {
       });
 
       test(
-          'should return error message when the call to remote data source is unsuccessful',
+          'should return error message when the call to remote data source thrown ServerException',
           () async {
         // arrange
         //
@@ -93,6 +93,90 @@ void main() {
         //
         verify(mockRemoteDataSource.getShortUrl(tUrl));
         expect(result, equals(Left(SERVER_FAILURE)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException403',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getShortUrl(any))
+            .thenThrow(ServerException403());
+
+        // act
+        //
+        //
+        final result = await repository.getShortenUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getShortUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_403)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException404',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getShortUrl(any))
+            .thenThrow(ServerException404());
+
+        // act
+        //
+        //
+        final result = await repository.getShortenUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getShortUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_404)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException500',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getShortUrl(any))
+            .thenThrow(ServerException500());
+
+        // act
+        //
+        //
+        final result = await repository.getShortenUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getShortUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_500)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException503',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getShortUrl(any))
+            .thenThrow(ServerException503());
+
+        // act
+        //
+        //
+        final result = await repository.getShortenUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getShortUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_503)));
       });
     });
 
@@ -143,7 +227,7 @@ void main() {
       });
 
       test(
-          'should return error message when the call to remote data source is unsuccessful',
+          'should return error message when the call to remote data source thrown ServerException',
           () async {
         // arrange
         //
@@ -161,6 +245,90 @@ void main() {
         //
         verify(mockRemoteDataSource.getOriginalUrl(tUrl));
         expect(result, equals(Left(SERVER_FAILURE)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException403',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getOriginalUrl(any))
+            .thenThrow(ServerException403());
+
+        // act
+        //
+        //
+        final result = await repository.getOriginalUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getOriginalUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_403)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException404',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getOriginalUrl(any))
+            .thenThrow(ServerException404());
+
+        // act
+        //
+        //
+        final result = await repository.getOriginalUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getOriginalUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_404)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException500',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getOriginalUrl(any))
+            .thenThrow(ServerException500());
+
+        // act
+        //
+        //
+        final result = await repository.getOriginalUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getOriginalUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_500)));
+      });
+
+      test(
+          'should return error message when the call to remote data source thrown ServerException503',
+          () async {
+        // arrange
+        //
+        //
+        when(mockRemoteDataSource.getOriginalUrl(any))
+            .thenThrow(ServerException503());
+
+        // act
+        //
+        //
+        final result = await repository.getOriginalUrl(tUrl);
+
+        // assert
+        //
+        //
+        verify(mockRemoteDataSource.getOriginalUrl(tUrl));
+        expect(result, equals(Left(SERVER_FAILURE_503)));
       });
     });
 
