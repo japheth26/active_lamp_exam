@@ -211,19 +211,19 @@ main() {
       expect(result.toJson(), equals(tUrlModel.toJson()));
     });
 
-    test('should throw Server Exception 403 when response code is 403', () {
+    test('should throw Server Exception when response code is 403', () {
       _testOriginalUrlException(403, tUrl);
     });
 
-    test('should throw Server Exception 404 when response code is 404', () {
+    test('should throw Server Exception when response code is 404', () {
       _testOriginalUrlException(404, tUrl);
     });
 
-    test('should throw Server Exception 500 when response code is 500', () {
+    test('should throw Server Exception when response code is 500', () {
       _testOriginalUrlException(500, tUrl);
     });
 
-    test('should throw Server Exception 503 when response code is 503', () {
+    test('should throw Server Exception when response code is 503', () {
       _testOriginalUrlException(503, tUrl);
     });
   });

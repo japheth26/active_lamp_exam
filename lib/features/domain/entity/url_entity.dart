@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class UrlEntity {
+class UrlEntity extends Equatable {
   final bool isSuccess;
   final String message;
   final String value;
