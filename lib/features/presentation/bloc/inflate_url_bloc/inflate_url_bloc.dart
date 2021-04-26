@@ -21,6 +21,11 @@ class InflateUrlBloc extends Bloc<InflateUrlEvent, InflateUrlState> {
     InflateUrlEvent event,
   ) async* {
     if (event is GetOriginalUrlEvent) {
+      if (event.url.isEmpty || event.url.contains(' ')) {
+        yield InflateUrlError(message: 'Invalid input');
+        return;
+      }
+
       yield InflateUrlLoading();
       final result = await getOriginalUrl.call(event.url);
 

@@ -21,6 +21,11 @@ class ConvertUrlBloc extends Bloc<ConvertUrlEvent, ConvertUrlState> {
     ConvertUrlEvent event,
   ) async* {
     if (event is GetConvertUrlEvent) {
+      if (event.url.isEmpty || event.url.contains(' ')) {
+        yield ConvertUrlError(message: 'Invalid input');
+        return;
+      }
+
       yield ConvertUrlLoading();
       final result = await getShortUrl.call(event.url);
 
