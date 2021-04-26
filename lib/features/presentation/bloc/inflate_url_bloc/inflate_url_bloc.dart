@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:active_lamp_exam/core/error/exceptions.dart';
 import 'package:active_lamp_exam/features/domain/entity/url_entity.dart';
 import 'package:active_lamp_exam/features/domain/usecases/get_original_url.dart';
 import 'package:bloc/bloc.dart';
@@ -22,7 +23,7 @@ class InflateUrlBloc extends Bloc<InflateUrlEvent, InflateUrlState> {
   ) async* {
     if (event is GetOriginalUrlEvent) {
       if (event.url.isEmpty || event.url.contains(' ')) {
-        yield InflateUrlError(message: 'Invalid input');
+        yield InflateUrlError(message: INVALID_INPUT);
         return;
       }
 

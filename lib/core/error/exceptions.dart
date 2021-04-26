@@ -4,6 +4,8 @@ class ServerException implements Exception {
   ServerException(this.message);
 }
 
+const String INVALID_INPUT = 'Invalid input';
+
 const String ERROR_UNKNOWN = 'Unknown error';
 
 const String ERROR_400 = 'Error[400]: Bad request';

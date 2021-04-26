@@ -26,6 +26,7 @@ main() {
 
   group('getOriginalUrl', () {
     final String tUrl = 'www.google.com';
+    final String tWhiteSpace = '     ';
     final UrlEntity tUrlEntitySuccess =
         UrlEntity(isSuccess: true, message: 'Success', value: 'link');
     final UrlEntity tUrlEntityFailure =
@@ -93,6 +94,36 @@ main() {
       //
       //
       bloc.add(GetOriginalUrlEvent(url: tUrl));
+    });
+
+    test('should emit [ERROR] when url is empty', () {
+      // assert later
+      //
+      //
+      final expected = [
+        InflateUrlError(message: INVALID_INPUT),
+      ];
+      expectLater(bloc.stream, emitsInOrder(expected));
+
+      // act
+      //
+      //
+      bloc.add(GetOriginalUrlEvent(url: ''));
+    });
+
+    test('should emit [ERROR] when url has white space', () {
+      // assert later
+      //
+      //
+      final expected = [
+        InflateUrlError(message: INVALID_INPUT),
+      ];
+      expectLater(bloc.stream, emitsInOrder(expected));
+
+      // act
+      //
+      //
+      bloc.add(GetOriginalUrlEvent(url: tWhiteSpace));
     });
 
     test('should emit [LOADING, INITIAL] when clearing fields', () {

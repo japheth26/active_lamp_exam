@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:active_lamp_exam/core/error/exceptions.dart';
 import 'package:active_lamp_exam/features/domain/usecases/get_short_url.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -22,7 +23,7 @@ class ConvertUrlBloc extends Bloc<ConvertUrlEvent, ConvertUrlState> {
   ) async* {
     if (event is GetConvertUrlEvent) {
       if (event.url.isEmpty || event.url.contains(' ')) {
-        yield ConvertUrlError(message: 'Invalid input');
+        yield ConvertUrlError(message: INVALID_INPUT);
         return;
       }
 

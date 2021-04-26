@@ -26,6 +26,7 @@ main() {
 
   group('getShortUrl', () {
     final String tUrl = 'www.google.com';
+    final String tWhiteSpace = '     ';
     final UrlEntity tUrlEntitySuccess =
         UrlEntity(isSuccess: true, message: 'Success', value: 'link');
     final UrlEntity tUrlEntityFail =
@@ -95,6 +96,36 @@ main() {
       //
       //
       bloc.add(GetConvertUrlEvent(url: tUrl));
+    });
+
+    test('should emit [ERROR] when url is empty', () {
+      // assert later
+      //
+      //
+      final expected = [
+        ConvertUrlError(message: INVALID_INPUT),
+      ];
+      expectLater(bloc.stream, emitsInOrder(expected));
+
+      // act
+      //
+      //
+      bloc.add(GetConvertUrlEvent(url: ''));
+    });
+
+    test('should emit [ERROR] when url has white space', () {
+      // assert later
+      //
+      //
+      final expected = [
+        ConvertUrlError(message: INVALID_INPUT),
+      ];
+      expectLater(bloc.stream, emitsInOrder(expected));
+
+      // act
+      //
+      //
+      bloc.add(GetConvertUrlEvent(url: tWhiteSpace));
     });
 
     test('should emit [LOADING, INITIAL] when clearing fields', () {
