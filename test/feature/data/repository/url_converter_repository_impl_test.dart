@@ -1,5 +1,6 @@
 import 'package:active_lamp_exam/core/error/exceptions.dart';
 import 'package:active_lamp_exam/core/network/network_info.dart';
+import 'package:active_lamp_exam/core/util/utility.dart';
 import 'package:active_lamp_exam/features/data/datasource/url_converter_remote_data_source.dart';
 import 'package:active_lamp_exam/features/data/model/url_model.dart';
 import 'package:active_lamp_exam/features/data/repository/url_converter_repository_impl.dart';
@@ -46,12 +47,12 @@ void main() {
     });
   }
 
-  final String tUrl = 'www.google.com';
   final UrlModel tUrlModel =
       UrlModel(isSuccess: true, message: 'Success', value: 'link');
   final UrlEntity tUrlEntity = tUrlModel;
 
   group('getShortUrl', () {
+    final String tUrl = 'https://www.google.com';
     runTestsOnline(() {
       test(
           'should return data when the call to remote data source is successful',
@@ -59,6 +60,7 @@ void main() {
         // arrange
         //
         //
+
         when(mockRemoteDataSource.getShortUrl(tUrl))
             .thenAnswer((_) async => tUrlModel);
 
@@ -204,6 +206,7 @@ void main() {
   });
 
   group('getOriginalUrl', () {
+    final String tUrl = 'www.google.com';
     runTestsOnline(() {
       test(
           'should return data when the call to remote data source is successful',

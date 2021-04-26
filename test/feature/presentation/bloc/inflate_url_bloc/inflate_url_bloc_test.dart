@@ -64,7 +64,7 @@ main() {
       //
       final expected = [
         InflateUrlLoading(),
-        InflateUrlSuccess(link: tUrlEntitySuccess.value),
+        InflateUrlSuccess(inputUrl: tUrl, link: tUrlEntitySuccess.value),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
 
