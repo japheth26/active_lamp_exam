@@ -1,4 +1,5 @@
 import 'package:active_lamp_exam/core/util/util_widget.dart';
+import 'package:active_lamp_exam/core/util/utility.dart';
 import 'package:active_lamp_exam/features/presentation/bloc/convert_url_bloc/convert_url_bloc.dart';
 import 'package:active_lamp_exam/features/presentation/widget/action_buttons_widget.dart';
 import 'package:active_lamp_exam/features/presentation/widget/error_ui_widget.dart';
@@ -117,9 +118,7 @@ class _BodyContentState extends State<BodyContent> {
           SizedBox(height: 30),
           FieldLabelCopy(
               label: 'Shortened URL',
-              function: () => Clipboard.setData(
-                      new ClipboardData(text: widget.outputUrl ?? ''))
-                  .then((value) => Fluttertoast.showToast(msg: 'copied'))),
+              function: () => copyToClip(widget.outputUrl)),
           Result(result: widget.outputUrl),
           SizedBox(height: 30),
           ActionButtonsWidget(
