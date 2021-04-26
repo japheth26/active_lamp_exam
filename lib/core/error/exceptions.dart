@@ -6,6 +6,8 @@ class ServerException implements Exception {
 
 const String ERROR_UNKNOWN = 'Unknown error';
 
+const String ERROR_400 = 'Error[400]: Bad request';
+
 const String ERROR_403 = 'Error[403]: Forbidden';
 
 const String ERROR_404 = 'Error[404]: Not found';
