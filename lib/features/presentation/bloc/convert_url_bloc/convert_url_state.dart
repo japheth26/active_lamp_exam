@@ -14,7 +14,8 @@ class ConvertUrlError extends ConvertUrlState {
 }
 
 class ConvertUrlSuccess extends ConvertUrlState {
+  final String inputUrl;
   final String link;
 
-  ConvertUrlSuccess({@required this.link});
+  ConvertUrlSuccess({@required this.inputUrl, @required this.link});
 }

@@ -21,13 +21,14 @@ class ConvertUrlBloc extends Bloc<ConvertUrlEvent, ConvertUrlState> {
     ConvertUrlEvent event,
   ) async* {
     if (event is GetConvertUrlEvent) {
-      final result = await getShortUrl.call(event.url);
       yield ConvertUrlLoading();
+      final result = await getShortUrl.call(event.url);
+
       yield* result.fold((failure) async* {
         yield ConvertUrlError(message: failure);
       }, (urlEntity) async* {
         if (urlEntity.isSuccess) {
-          yield ConvertUrlSuccess(link: urlEntity.value);
+          yield ConvertUrlSuccess(inputUrl: event.url, link: urlEntity.value);
         } else {
           yield ConvertUrlError(message: urlEntity.message);
         }

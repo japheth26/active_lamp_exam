@@ -1,22 +1,56 @@
 import 'package:active_lamp_exam/core/util/util_widget.dart';
+import 'package:active_lamp_exam/features/presentation/bloc/convert_url_bloc/convert_url_bloc.dart';
+import 'package:active_lamp_exam/features/presentation/widget/action_buttons_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/error_ui_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/loading_ui_widget.dart';
+import 'package:active_lamp_exam/injection_container.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ConvertUrl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height - 150,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FeatureTitle(title: 'Convert URL'),
-              SizedBox(height: 30),
-              BodyContent(),
-            ],
+    return BlocProvider(
+      create: (_) => sl<ConvertUrlBloc>(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height - 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Title
+                FeatureTitle(title: 'Convert URL'),
+                SizedBox(height: 30),
+
+                // Main content
+
+                BlocConsumer<ConvertUrlBloc, ConvertUrlState>(
+                    builder: (context, state) {
+                  if (state is ConvertUrlLoading) {
+                    return LoadingUiWidget();
+                  } else if (state is ConvertUrlError) {
+                    return ErrorUiWidget(
+                        message: state.message,
+                        function: () {
+                          BlocProvider.of<ConvertUrlBloc>(context)
+                              .add(ClearFieldsForConvertUrlEvent());
+                        });
+                  } else if (state is ConvertUrlSuccess) {
+                    return BodyContent(
+                        inputUrl: state.inputUrl, outputUrl: state.link);
+                  } else {
+                    return BodyContent(inputUrl: null, outputUrl: null);
+                  }
+                }, listener: (context, state) {
+                  //
+                }),
+              ],
+            ),
           ),
         ),
       ),
@@ -27,7 +61,30 @@ class ConvertUrl extends StatelessWidget {
 // BODY CONTENT
 //
 //
-class BodyContent extends StatelessWidget {
+class BodyContent extends StatefulWidget {
+  final String outputUrl;
+  final String inputUrl;
+
+  const BodyContent({Key key, this.inputUrl, this.outputUrl}) : super(key: key);
+  @override
+  _BodyContentState createState() => _BodyContentState();
+}
+
+class _BodyContentState extends State<BodyContent> {
+  TextEditingController inputUrlController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    inputUrlController.text = widget.inputUrl;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    inputUrlController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,41 +112,26 @@ class BodyContent extends StatelessWidget {
           ),
           ExpandableField(
             hint: 'Input your long URL',
-            textEditingController: null,
+            textEditingController: inputUrlController,
           ),
           SizedBox(height: 30),
-          FieldLabelCopy(label: 'Shortened URL', function: () {}),
-          Result(result: null),
+          FieldLabelCopy(
+              label: 'Shortened URL',
+              function: () => Clipboard.setData(
+                      new ClipboardData(text: widget.outputUrl ?? ''))
+                  .then((value) => Fluttertoast.showToast(msg: 'copied'))),
+          Result(result: widget.outputUrl),
           SizedBox(height: 30),
-          ActionButtons(),
-        ],
-      ),
-    );
-  }
-}
-
-// ACTION BUTTONS
-//
-//
-class ActionButtons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Row(
-        children: [
-          Expanded(
-            child: OutlinedButtonDesign(
-              label: 'Clear',
-              function: () {},
-            ),
-          ),
-          SizedBox(width: 10),
-          Expanded(
-            child: ButtonDesign(
-              label: 'Convert',
-              function: () {},
-            ),
+          ActionButtonsWidget(
+            clear: () {
+              setState(() => inputUrlController.text = '');
+              BlocProvider.of<ConvertUrlBloc>(context)
+                  .add(ClearFieldsForConvertUrlEvent());
+            },
+            convert: () {
+              BlocProvider.of<ConvertUrlBloc>(context)
+                  .add(GetConvertUrlEvent(url: inputUrlController.text));
+            },
           ),
         ],
       ),

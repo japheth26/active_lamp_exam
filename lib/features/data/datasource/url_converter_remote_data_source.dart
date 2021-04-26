@@ -21,7 +21,7 @@ class UrlConvertRemoteDataSourceImpl implements UrlConvertRemoteDataSource {
   Future<UrlModel> getOriginalUrl(String url) async {
     String uri = '${_api.domain}${_api.endpoint_bitlinks}/$url';
     http.Response response = await client.get(Uri.parse(uri), headers: {
-      'Authentication': '${_api.token}',
+      'Authorization': '${_api.token}',
       'Content-Type': 'application/json',
     });
 
@@ -32,19 +32,18 @@ class UrlConvertRemoteDataSourceImpl implements UrlConvertRemoteDataSource {
       return UrlModel(
           isSuccess: true, message: 'Success', value: map['long_url']);
     } else {
-      _checkException(response);
-      return null;
+      throw _checkException(response);
     }
   }
 
   @override
   Future<UrlModel> getShortUrl(String url) async {
-    Map<String, dynamic> data = {'long_url': url};
+    Map data = {'long_url': url};
 
     String uri = '${_api.domain}${_api.endpoint_shorten}';
     http.Response response = await client.post(Uri.parse(uri),
         headers: {
-          'Authentication': '${_api.token}',
+          'Authorization': '${_api.token}',
           'Content-Type': 'application/json',
         },
         body: json.encode(data));
@@ -53,30 +52,33 @@ class UrlConvertRemoteDataSourceImpl implements UrlConvertRemoteDataSource {
       Map<String, dynamic> map = jsonDecode(response.body);
       return UrlModel(isSuccess: true, message: 'Success', value: map['link']);
     } else {
-      _checkException(response);
-      return null;
+      throw _checkException(response);
     }
   }
 
   // VALIDATE RESPONSE
   //
   //
-  void _checkException(http.Response response) {
+  ServerException _checkException(http.Response response) {
+    print('check status code: ${response.statusCode}');
     switch (response.statusCode) {
+      case 400:
+        return ServerException(ERROR_400);
+        break;
       case 403:
-        throw ServerException(ERROR_403);
+        return ServerException(ERROR_403);
         break;
       case 404:
-        throw ServerException(ERROR_404);
+        return ServerException(ERROR_404);
         break;
       case 500:
-        throw ServerException(ERROR_500);
+        return ServerException(ERROR_500);
         break;
       case 503:
-        throw ServerException(ERROR_503);
+        return ServerException(ERROR_503);
         break;
       default:
-        throw ServerException(ERROR_UNKNOWN);
+        return ServerException(ERROR_UNKNOWN);
     }
   }
 }
