@@ -1,5 +1,6 @@
 import 'package:active_lamp_exam/core/error/exceptions.dart';
 import 'package:active_lamp_exam/core/network/network_info.dart';
+import 'package:active_lamp_exam/core/util/utility.dart';
 import 'package:active_lamp_exam/features/data/datasource/url_converter_remote_data_source.dart';
 import 'package:active_lamp_exam/features/data/model/url_model.dart';
 import 'package:active_lamp_exam/features/domain/entity/url_entity.dart';
@@ -22,7 +23,8 @@ class UrlConverterRepositoryImpl implements UrlConverterRepository {
   Future<Either<String, UrlEntity>> getOriginalUrl(String url) async {
     if (await networkInfo.isConnected) {
       try {
-        final UrlModel result = await remoteDataSource.getOriginalUrl(url);
+        String finalUrl = isHttp(url) ? removeHttp(url) : url;
+        final UrlModel result = await remoteDataSource.getOriginalUrl(finalUrl);
         return Right(result);
       } on ServerException catch (e) {
         return Left(e.message);
@@ -36,7 +38,8 @@ class UrlConverterRepositoryImpl implements UrlConverterRepository {
   Future<Either<String, UrlEntity>> getShortenUrl(String url) async {
     if (await networkInfo.isConnected) {
       try {
-        final UrlModel result = await remoteDataSource.getShortUrl(url);
+        String finalUrl = isHttp(url) ? url : 'https://$url';
+        final UrlModel result = await remoteDataSource.getShortUrl(finalUrl);
         return Right(result);
       } on ServerException catch (e) {
         return Left(e.message);

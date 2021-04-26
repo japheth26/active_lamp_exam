@@ -28,7 +28,7 @@ class InflateUrlBloc extends Bloc<InflateUrlEvent, InflateUrlState> {
         yield InflateUrlError(message: failure);
       }, (urlEntity) async* {
         if (urlEntity.isSuccess) {
-          yield InflateUrlSuccess(link: urlEntity.value);
+          yield InflateUrlSuccess(inputUrl: event.url, link: urlEntity.value);
         } else {
           yield InflateUrlError(message: urlEntity.message);
         }

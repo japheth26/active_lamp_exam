@@ -1,5 +1,5 @@
-import 'package:active_lamp_exam/features/presentation/widget/convert_url.dart';
-import 'package:active_lamp_exam/features/presentation/widget/inflate_url.dart';
+import 'package:active_lamp_exam/features/presentation/page/convert_url.dart';
+import 'package:active_lamp_exam/features/presentation/page/inflate_url.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

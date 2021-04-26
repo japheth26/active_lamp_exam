@@ -14,7 +14,8 @@ class InflateUrlError extends InflateUrlState {
 }
 
 class InflateUrlSuccess extends InflateUrlState {
+  final String inputUrl;
   final String link;
 
-  InflateUrlSuccess({@required this.link});
+  InflateUrlSuccess({@required this.inputUrl, @required this.link});
 }
