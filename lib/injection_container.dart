@@ -54,5 +54,5 @@ Future<void> init() async {
   //
   //
   sl.registerLazySingleton(() => DataConnectionChecker());
-  sl.registerLazySingleton(() => http.Client);
+  sl.registerLazySingleton(() => http.Client());
 }
