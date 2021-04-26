@@ -65,7 +65,7 @@ main() {
       //
       final expected = [
         ConvertUrlLoading(),
-        ConvertUrlSuccess(link: tUrlEntitySuccess.value),
+        ConvertUrlSuccess(inputUrl: tUrl, link: tUrlEntitySuccess.value),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
 
