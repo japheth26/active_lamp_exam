@@ -101,7 +101,7 @@ main() {
       //
       verify(mockHttpClient.post(Uri.parse(uri),
           headers: {
-            'Authentication': '${_api.token}',
+            'Authorization': '${_api.token}',
             'Content-Type': 'application/json',
           },
           body: json.encode(data)));
@@ -189,7 +189,7 @@ main() {
       //
       //
       verify(mockHttpClient.get(Uri.parse('$uri/$tUrl'), headers: {
-        'Authentication': _api.token,
+        'Authorization': _api.token,
         'Content-Type': 'application/json',
       }));
     });
