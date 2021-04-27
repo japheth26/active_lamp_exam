@@ -25,8 +25,6 @@ class UrlConvertRemoteDataSourceImpl implements UrlConvertRemoteDataSource {
       'Content-Type': 'application/json',
     });
 
-    print('status code: ${response.statusCode}');
-
     if (response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
       return UrlModel(

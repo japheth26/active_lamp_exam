@@ -1,4 +1,5 @@
-import 'package:active_lamp_exam/core/util/util_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/button_design_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/outlined_buttons_design_widget.dart';
 import 'package:flutter/material.dart';
 
 class ActionButtonsWidget extends StatelessWidget {
@@ -15,14 +16,14 @@ class ActionButtonsWidget extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: OutlinedButtonDesign(
+            child: OutlinedButtonDesignWidget(
               label: 'Clear',
               function: clear,
             ),
           ),
           SizedBox(width: 10),
           Expanded(
-            child: ButtonDesign(
+            child: ButtonDesignWidget(
               label: 'Convert',
               function: convert,
             ),

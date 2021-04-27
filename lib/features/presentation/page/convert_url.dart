@@ -1,9 +1,13 @@
-import 'package:active_lamp_exam/core/util/util_widget.dart';
 import 'package:active_lamp_exam/core/util/utility.dart';
 import 'package:active_lamp_exam/features/presentation/bloc/convert_url_bloc/convert_url_bloc.dart';
 import 'package:active_lamp_exam/features/presentation/widget/action_buttons_widget.dart';
 import 'package:active_lamp_exam/features/presentation/widget/error_ui_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/expandable_field_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/feature_title_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/field_label_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/filed_label_copy_widget.dart';
 import 'package:active_lamp_exam/features/presentation/widget/loading_ui_widget.dart';
+import 'package:active_lamp_exam/features/presentation/widget/result_widget.dart';
 import 'package:active_lamp_exam/injection_container.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +29,7 @@ class ConvertUrl extends StatelessWidget {
               children: [
                 SizedBox(height: 80),
                 // Title
-                FeatureTitle(title: 'Convert URL'),
+                FeatureTitleWidget(title: 'Convert URL'),
                 SizedBox(height: 30),
 
                 // Main content
@@ -45,7 +49,7 @@ class ConvertUrl extends StatelessWidget {
                     return BodyContent(
                         inputUrl: state.inputUrl, outputUrl: state.link);
                   } else {
-                    return BodyContent(inputUrl: null, outputUrl: null);
+                    return BodyContent();
                   }
                 }),
               ],
@@ -105,19 +109,19 @@ class _BodyContentState extends State<BodyContent> {
       ),
       child: Column(
         children: [
-          FieldLabel(
+          FieldLabelWidget(
             icon: Icon(Icons.link),
             label: 'Long URL',
           ),
-          ExpandableField(
+          ExpandableFieldWidget(
             hint: 'Input your long URL',
             textEditingController: inputUrlController,
           ),
           SizedBox(height: 30),
-          FieldLabelCopy(
+          FieldLabelCopyWidget(
               label: 'Shortened URL',
               function: () => copyToClip(widget.outputUrl)),
-          Result(result: widget.outputUrl),
+          ResultWidget(result: widget.outputUrl),
           SizedBox(height: 30),
           ActionButtonsWidget(
             clear: () {
